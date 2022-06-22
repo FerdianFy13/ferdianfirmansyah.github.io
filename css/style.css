@@ -31,8 +31,8 @@
 /*for custom fonts*/
 @font-face {
     font-family: 'mustardo';
-    src: url('https://rawcdn.githack.com/FerdianFy13/web_pf/4afc03f2207720066e8122b91837a36b859fb426/fonts/mustardo/mustardo-webfont.woff2') format('woff2'),
-         url('https://rawcdn.githack.com/FerdianFy13/web_pf/4afc03f2207720066e8122b91837a36b859fb426/fonts/mustardo/mustardo-webfont.woff') format('woff');
+    src: url('../fonts/mustardo/mustardo-webfont.woff2') format('woff2'),
+         url('../fonts/mustardo/mustardo-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
