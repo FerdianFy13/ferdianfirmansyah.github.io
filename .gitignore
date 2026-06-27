@@ -1,0 +1,13 @@
+# Documentation — tidak dicommit ke repo
+docs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+*.code-workspace
+
+# Logs
+*.log
