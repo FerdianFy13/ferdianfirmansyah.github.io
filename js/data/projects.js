@@ -99,4 +99,15 @@ export const projects = [
     github: null,
     demo: null,
   },
+  {
+    id: 'zenplay',
+    name: 'ZenPlay — Stress Relief Games',
+    type: 'Web App',
+    role: 'Full Stack Developer',
+    private: false,
+    description: 'A pocket sanctuary of 12 stress-relief mini-games built with pure vanilla JS ES Modules — no accounts, no ads, no backend, no build step. Features a custom event bus, achievement system, Web Audio synthesis, and light/dark/auto theming.',
+    tech: ['HTML5', 'CSS3', 'JavaScript (ES2022)', 'Web Audio API', 'Canvas 2D'],
+    github: null,
+    demo: 'https://zenplaylang.netlify.app/',
+  },
 ];

@@ -9,6 +9,6 @@ export const education = [
     school: 'SMAN 1 Banyuwangi',
     degree: 'Science (IPA)',
     location: 'Banyuwangi, Indonesia',
-    period: '2017 – 2020',
+    period: '2018 – 2020',
   },
 ];
