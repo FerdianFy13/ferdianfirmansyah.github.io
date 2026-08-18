@@ -20,6 +20,7 @@ export function renderHero() {
     <section class="hero" id="hero">
       <div class="hero__bg-orb hero__bg-orb--1"></div>
       <div class="hero__bg-orb hero__bg-orb--2"></div>
+      <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
 
       <div class="container hero__content">
         <div class="hero__status ${statusClass}">
