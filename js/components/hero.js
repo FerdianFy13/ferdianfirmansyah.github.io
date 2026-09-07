@@ -3,9 +3,7 @@ import { renderHTML, renderList } from '../utils/render.js';
 import { getIcon } from '../utils/icons.js';
 
 export function renderHero() {
-  const techChips = renderList(config.techHighlights, (tech) => `
-    <span class="tech-chip">${tech}</span>
-  `);
+  const techLine = config.techHighlights.join(' · ');
 
   const socialLinks = renderList(config.social, (item) => `
     <a href="${item.url}" class="hero-social__link" aria-label="${item.platform}" target="_blank" rel="noopener noreferrer">
@@ -13,17 +11,12 @@ export function renderHero() {
     </a>
   `);
 
-  const statusClass = config.status.available ? 'status--available' : 'status--busy';
-  const statusDot = config.status.available ? 'status-dot--green' : 'status-dot--yellow';
+  const statusDot = config.status.available ? 'status-dot--available' : 'status-dot--busy';
 
   renderHTML('#home-section', `
     <section class="hero" id="hero">
-      <div class="hero__bg-orb hero__bg-orb--1"></div>
-      <div class="hero__bg-orb hero__bg-orb--2"></div>
-      <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
-
       <div class="container hero__content">
-        <div class="hero__status ${statusClass}">
+        <div class="hero__status">
           <span class="status-dot ${statusDot}"></span>
           <span>${config.status.text}</span>
         </div>
@@ -36,9 +29,7 @@ export function renderHero() {
         <p class="hero__title">${config.title}</p>
         <p class="hero__subtitle">${config.subtitle}</p>
 
-        <div class="hero__tech">
-          ${techChips}
-        </div>
+        <p class="hero__tech">${techLine}</p>
 
         <div class="hero__cta">
           <a href="#projects-section" class="btn btn--primary">View Projects</a>
@@ -51,10 +42,6 @@ export function renderHero() {
           ${socialLinks}
         </div>
       </div>
-
-      <a href="#about-section" class="hero__scroll-indicator" aria-label="Scroll to About">
-        ${getIcon('arrowDown')}
-      </a>
     </section>
   `);
 }

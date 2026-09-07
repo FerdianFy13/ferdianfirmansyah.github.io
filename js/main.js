@@ -15,8 +15,6 @@ import {
   initSmoothScroll,
   initMobileMenu,
 } from "./utils/animation.js";
-import { initHeroScene } from "./utils/heroScene.js";
-import { initBgScene } from "./utils/bgScene.js";
 
 function render() {
   renderNavbar();
@@ -37,8 +35,6 @@ function init() {
   initNavScrollSpy();
   initSmoothScroll();
   initMobileMenu();
-  initHeroScene();
-  initBgScene();
 }
 
 document.addEventListener("DOMContentLoaded", init);
