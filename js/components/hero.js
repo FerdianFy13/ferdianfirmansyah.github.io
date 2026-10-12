@@ -33,9 +33,9 @@ export function renderHero() {
 
         <div class="hero__cta">
           <a href="#projects-section" class="btn btn--primary">View Projects</a>
-          <a href="${config.cv}" target="_blank" rel="noopener noreferrer" class="btn btn--outline">
-            ${getIcon('download')} Download CV
-          </a>
+          <button type="button" data-cv-open class="btn btn--outline">
+            ${getIcon('eye')} View CV
+          </button>
         </div>
 
         <div class="hero-social">

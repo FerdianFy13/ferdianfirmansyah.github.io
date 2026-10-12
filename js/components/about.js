@@ -50,9 +50,9 @@ export function renderAbout() {
             </ul>
 
             <div class="about-actions">
-              <a href="${config.cv}" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
-                ${getIcon('download')} Download CV
-              </a>
+              <button type="button" data-cv-open class="btn btn--primary">
+                ${getIcon('eye')} View CV
+              </button>
               <a href="#contact-section" class="btn btn--outline">Contact Me</a>
             </div>
           </div>
