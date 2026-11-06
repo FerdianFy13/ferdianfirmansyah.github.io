@@ -3,6 +3,11 @@ import { config } from '../data/config.js';
 const PDFJS_VERSION = '3.11.174';
 const PDFJS_BASE = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}`;
 
+const DOCS = {
+  cv: { title: 'Curriculum Vitae', file: () => config.cv },
+  portfolio: { title: 'Portfolio', file: () => config.portfolio },
+};
+
 let pdfjsPromise = null;
 
 function loadPdfJs() {
@@ -30,7 +35,7 @@ export function initCvModal() {
   modal.className = 'cv-modal';
   modal.setAttribute('role', 'dialog');
   modal.setAttribute('aria-modal', 'true');
-  modal.setAttribute('aria-label', 'Curriculum Vitae preview');
+  modal.setAttribute('aria-label', 'Document preview');
   modal.hidden = true;
   modal.innerHTML = `
     <div class="cv-modal__backdrop"></div>
@@ -54,12 +59,12 @@ export function initCvModal() {
   let lastFocus = null;
   let session = 0;
 
-  async function renderPdf(id) {
+  async function renderPdf(id, doc) {
     status.hidden = false;
     status.textContent = 'Loading…';
     try {
       const pdfjsLib = await loadPdfJs();
-      const pdf = await pdfjsLib.getDocument(encodeURI(config.cv)).promise;
+      const pdf = await pdfjsLib.getDocument(encodeURI(doc.file())).promise;
       const cssWidth = Math.min(body.clientWidth - 32, 860);
       const dpr = window.devicePixelRatio || 1;
 
@@ -76,7 +81,7 @@ export function initCvModal() {
         canvas.style.width = `${cssWidth}px`;
         canvas.style.height = `${viewport.height / dpr}px`;
         canvas.setAttribute('role', 'img');
-        canvas.setAttribute('aria-label', `Curriculum Vitae page ${n}`);
+        canvas.setAttribute('aria-label', `${doc.title} page ${n}`);
         pages.appendChild(canvas);
 
         await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
@@ -90,13 +95,15 @@ export function initCvModal() {
     }
   }
 
-  const open = () => {
+  const open = (key) => {
+    const doc = DOCS[key] || DOCS.cv;
+    modal.querySelector('.cv-modal__title').textContent = doc.title;
     lastFocus = document.activeElement;
     modal.hidden = false;
     document.body.classList.add('no-scroll');
     modal.querySelector('.cv-modal__close').focus();
     pages.replaceChildren();
-    renderPdf(++session);
+    renderPdf(++session, doc);
   };
 
   const close = () => {
@@ -108,9 +115,10 @@ export function initCvModal() {
   };
 
   document.addEventListener('click', (e) => {
-    if (e.target.closest('[data-cv-open]')) {
+    const trigger = e.target.closest('[data-doc-open]');
+    if (trigger) {
       e.preventDefault();
-      open();
+      open(trigger.dataset.docOpen);
     }
   });
 

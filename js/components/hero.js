@@ -33,8 +33,11 @@ export function renderHero() {
 
         <div class="hero__cta">
           <a href="#projects-section" class="btn btn--primary">View Projects</a>
-          <button type="button" data-cv-open class="btn btn--outline">
+          <button type="button" data-doc-open="cv" class="btn btn--outline">
             ${getIcon('eye')} View CV
+          </button>
+          <button type="button" data-doc-open="portfolio" class="btn btn--outline">
+            ${getIcon('eye')} View Portfolio
           </button>
         </div>
 

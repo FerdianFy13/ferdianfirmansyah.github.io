@@ -38,10 +38,11 @@ Personal portfolio website built with vanilla JavaScript (ES Modules), zero depe
 │       ├── icons.js        # Inline SVG icons
 │       └── render.js       # renderHTML(), renderList(), escapeHTML()
 ├── images/
-│   ├── favicon.svg         # FF monogram favicon
-│   ├── ferdian.webp        # Profile photo (19 KB)
+│   ├── favicon-journal.svg # FF monogram favicon (current, amber/dark journal theme)
+│   ├── favicon.svg         # Previous FF favicon (indigo, kept)
+│   ├── ferdian-professional.webp  # Professional profile photo, 560x560 (14 KB)
 │   └── skills/             # Skill icon images
-└── resume/                 # CV files (not tracked if sensitive)
+└── resume/                 # CV and portfolio PDFs (shown via preview modal)
 ```
 
 ## Update Content

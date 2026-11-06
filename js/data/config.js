@@ -13,7 +13,8 @@ export const config = {
   location: 'Surabaya, Indonesia',
   email: 'ferdianfy13@gmail.com',
   phone: '+62 813-3791-5702',
-  cv: 'resume/Curriculum Vitae_ATS_Ferdian Firmansyah.pdf',
+  cv: 'resume/Curriculum Vitae_ATS_Ferdian Firmansyah_work_en.pdf',
+  portfolio: 'resume/Portfolio_Ferdian_Firmansyah_Modern.pdf',
 
   about: `Software engineer from Indonesia focused on backend development using Laravel and CodeIgniter.
 Currently working at De Vivace in Surabaya, where I architect scalable RESTful systems,

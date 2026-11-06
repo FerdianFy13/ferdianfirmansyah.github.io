@@ -29,7 +29,7 @@ export function renderAbout() {
 
           <div class="about-photo reveal">
             <div class="about-photo__frame">
-              <img src="images/ferdian.webp" alt="Ferdian Firmansyah" loading="lazy" decoding="async">
+              <img src="images/ferdian-professional.webp" alt="Ferdian Firmansyah" loading="lazy" decoding="async">
               <div class="about-photo__status" aria-label="Current status">
                 <span class="about-photo__status-dot"></span>
                 ${config.status.currentRole}
@@ -50,8 +50,11 @@ export function renderAbout() {
             </ul>
 
             <div class="about-actions">
-              <button type="button" data-cv-open class="btn btn--primary">
+              <button type="button" data-doc-open="cv" class="btn btn--primary">
                 ${getIcon('eye')} View CV
+              </button>
+              <button type="button" data-doc-open="portfolio" class="btn btn--outline">
+                ${getIcon('eye')} View Portfolio
               </button>
               <a href="#contact-section" class="btn btn--outline">Contact Me</a>
             </div>
