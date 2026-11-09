@@ -4,9 +4,64 @@ const PDFJS_VERSION = '3.11.174';
 const PDFJS_BASE = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}`;
 
 const DOCS = {
-  cv: { title: 'Curriculum Vitae', file: () => config.cv },
-  portfolio: { title: 'Portfolio', file: () => config.portfolio },
+  cv: { title: 'Curriculum Vitae', file: () => config.cv, version: () => config.cvVersion },
+  portfolio: { title: 'Portfolio', file: () => config.portfolio, version: () => config.portfolioVersion },
 };
+
+// ---- Client-side cache -------------------------------------------------
+// Documents: key -> { promise, pdf }. Caching the promise dedupes concurrent opens.
+// Canvases: key -> rendered <canvas>. Bounded, as a page can cost ~16 MB at DPR 2.
+const MAX_DOCS = 3;
+const MAX_CANVASES = 6;
+const docCache = new Map();
+const canvasCache = new Map();
+
+const docId = (doc) => `${doc.file()}@${doc.version?.() ?? ''}`;
+const docUrl = (doc) => encodeURI(`${doc.file()}${doc.version?.() ? `?v=${doc.version()}` : ''}`);
+
+function touch(map, key) {
+  const value = map.get(key);
+  map.delete(key);
+  map.set(key, value);
+  return value;
+}
+
+function dropCanvases(id) {
+  for (const key of [...canvasCache.keys()]) {
+    if (key.startsWith(`${id}|`)) canvasCache.delete(key);
+  }
+}
+
+function evictDoc(id) {
+  const entry = docCache.get(id);
+  docCache.delete(id);
+  dropCanvases(id);
+  entry?.promise.then((pdf) => pdf.destroy()).catch(() => {});
+}
+
+function getPdf(pdfjsLib, doc) {
+  const id = docId(doc);
+  if (docCache.has(id)) return touch(docCache, id).promise;
+
+  const promise = pdfjsLib.getDocument(docUrl(doc)).promise;
+  docCache.set(id, { promise });
+  promise.catch(() => {
+    if (docCache.get(id)?.promise === promise) docCache.delete(id);
+  });
+  while (docCache.size > MAX_DOCS) evictDoc(docCache.keys().next().value);
+  return promise;
+}
+
+function storeCanvas(key, canvas) {
+  canvasCache.set(key, canvas);
+  while (canvasCache.size > MAX_CANVASES) canvasCache.delete(canvasCache.keys().next().value);
+}
+
+/** Releases every cached document and canvas. The next open starts from scratch. */
+export function clearPdfCache() {
+  for (const id of [...docCache.keys()]) evictDoc(id);
+  canvasCache.clear();
+}
 
 let pdfjsPromise = null;
 
@@ -64,13 +119,25 @@ export function initCvModal() {
     status.textContent = 'Loading…';
     try {
       const pdfjsLib = await loadPdfJs();
-      const pdf = await pdfjsLib.getDocument(encodeURI(doc.file())).promise;
+      const pdf = await getPdf(pdfjsLib, doc);
       const cssWidth = Math.min(body.clientWidth - 32, 860);
       const dpr = window.devicePixelRatio || 1;
+      const did = docId(doc);
 
       for (let n = 1; n <= pdf.numPages; n++) {
         if (id !== session) return;
+
+        const cacheKey = `${did}|${n}|${cssWidth}|${dpr}`;
+        const cached = canvasCache.get(cacheKey);
+        if (cached) {
+          touch(canvasCache, cacheKey);
+          pages.appendChild(cached);
+          if (n === 1) status.hidden = true;
+          continue;
+        }
+
         const page = await pdf.getPage(n);
+        if (id !== session) return;
         const base = page.getViewport({ scale: 1 });
         const scale = cssWidth / base.width;
         const viewport = page.getViewport({ scale: scale * dpr });
@@ -84,7 +151,18 @@ export function initCvModal() {
         canvas.setAttribute('aria-label', `${doc.title} page ${n}`);
         pages.appendChild(canvas);
 
-        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        const task = page.render({ canvasContext: canvas.getContext('2d'), viewport });
+        // Closing the modal mid-render cancels it; half-drawn canvases are never cached.
+        const watcher = setInterval(() => {
+          if (id !== session) task.cancel();
+        }, 50);
+        try {
+          await task.promise;
+        } finally {
+          clearInterval(watcher);
+        }
+        if (id !== session) return;
+        storeCanvas(cacheKey, canvas);
         if (n === 1) status.hidden = true;
       }
     } catch (err) {

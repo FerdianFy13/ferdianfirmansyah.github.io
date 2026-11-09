@@ -1,3 +1,9 @@
+# Always revalidate (ETag) so a replaced PDF is never served stale.
+[[headers]]
+  for = "/resume/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
 [[edge_functions]]
   path = "/resume/*"
   function = "block-direct-pdf"
