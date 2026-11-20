@@ -38,7 +38,8 @@ Personal portfolio website built with vanilla JavaScript (ES Modules), zero depe
 │       ├── icons.js        # Inline SVG icons
 │       └── render.js       # renderHTML(), renderList(), escapeHTML()
 ├── images/
-│   ├── favicon-journal.svg # FF monogram favicon (current)
+│   ├── favicon-navy.svg    # FF monogram favicon (current, navy/yellow)
+│   ├── favicon-journal.svg # Previous FF favicon (amber, kept)
 │   ├── favicon.svg         # Previous FF favicon (indigo, kept)
 │   ├── award/              # Certificate photos (WebP, lazy-loaded in preview modal)
 │   ├── ferdian.webp        # Profile photo shown in About (19 KB)
