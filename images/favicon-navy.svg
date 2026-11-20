@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#011e42"/>
+  <rect x="1" y="1" width="30" height="30" rx="7" fill="none" stroke="#8cb4e8" stroke-width="1.5" opacity="0.35"/>
+  <text x="15" y="22" font-family="Prompt,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="16" font-weight="700" fill="#eef3fa" text-anchor="middle" letter-spacing="-1">FF</text>
+  <circle cx="25" cy="21" r="2" fill="#f6b700"/>
+</svg>

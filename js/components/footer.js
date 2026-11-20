@@ -17,33 +17,13 @@ export function renderFooter() {
 
   renderHTML('#footer-root', `
     <div class="footer">
+      <!-- Footer brand, navigation & social row — disabled for now
       <div class="container footer__inner">
-
-        <div class="footer__brand">
-          <a href="#home-section" class="footer__name">${config.shortName}</a>
-          <p class="footer__tagline">Building things for the web & mobile.</p>
-          <div class="footer-social">
-            ${socialLinks}
-          </div>
-        </div>
-
-        <div class="footer__nav">
-          <span class="footer__nav-title">Navigation</span>
-          <ul class="footer-links" role="list">
-            ${navLinks}
-          </ul>
-        </div>
-
-        <div class="footer__contact">
-          <span class="footer__nav-title">Contact</span>
-          <ul class="footer-links" role="list">
-            <li><a href="mailto:${config.email}" class="footer-link">${config.email}</a></li>
-            <li><a href="https://wa.me/6281337915702" class="footer-link" target="_blank" rel="noopener noreferrer">${config.phone}</a></li>
-          </ul>
-        </div>
-
+        <a href="#home-section" class="footer__name">${config.shortName}</a>
+        <nav aria-label="Footer"><ul class="footer-links" role="list">${navLinks}</ul></nav>
+        <div class="footer-social">${socialLinks}</div>
       </div>
-
+      -->
       <div class="footer__bottom">
         <div class="container">
           <p>&copy; ${year} ${config.name}. All rights reserved.</p>

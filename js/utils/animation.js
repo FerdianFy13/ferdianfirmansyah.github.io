@@ -11,7 +11,12 @@ export function initScrollReveal() {
     { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
   );
 
-  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  // Stagger siblings that reveal together (max 4 steps keeps it snappy)
+  document.querySelectorAll('.reveal').forEach((el) => {
+    const idx = [...el.parentElement.children].filter((c) => c.classList.contains('reveal')).indexOf(el);
+    el.style.setProperty('--i', Math.min(idx, 4));
+    observer.observe(el);
+  });
 }
 
 export function initProgressBar() {
@@ -60,6 +65,14 @@ export function initMobileMenu() {
   toggle.addEventListener('click', () => {
     const isOpen = menu.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('menu-open', isOpen);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('open')) {
+      closeMobileMenu();
+      toggle.focus();
+    }
   });
 }
 
@@ -89,4 +102,5 @@ function closeMobileMenu() {
   const toggle = document.getElementById('nav-toggle');
   if (menu) menu.classList.remove('open');
   if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-open');
 }

@@ -6,6 +6,9 @@ import { renderSkills } from "./components/skills.js";
 import { renderProjects } from "./components/projects.js";
 import { renderContact } from "./components/contact.js";
 import { renderFooter } from "./components/footer.js";
+import { initCvModal } from "./components/cv-modal.js";
+import { initImageModal } from "./components/image-modal.js";
+import { initProtection } from "./utils/protect.js";
 
 import {
   initScrollReveal,
@@ -28,6 +31,7 @@ function render() {
 }
 
 function init() {
+  initProtection();
   render();
   initScrollReveal();
   initProgressBar();
@@ -35,6 +39,8 @@ function init() {
   initNavScrollSpy();
   initSmoothScroll();
   initMobileMenu();
+  initCvModal();
+  initImageModal();
 }
 
 document.addEventListener("DOMContentLoaded", init);

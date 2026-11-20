@@ -34,30 +34,21 @@ export function renderContact() {
     </a>
   `);
 
-  const socialLinks = renderList(config.social, (item) => `
-    <a href="${item.url}" class="contact-social__link" aria-label="${item.platform}" target="_blank" rel="noopener noreferrer">
-      ${getIcon(item.icon)}
-    </a>
-  `);
-
   renderHTML('#contact-section', `
-    <section class="section" id="contact">
+    <section class="section section--alt" id="contact">
       <div class="container">
-        <div class="section-header reveal">
+        <div class="contact-lead reveal">
           <div class="section-label">Contact</div>
-          <h2 class="section-title">Let's Work Together</h2>
-          <p class="section-desc">
+          <h2 class="contact-title">Let's build something <span>solid</span> together.</h2>
+          <p class="contact-desc">
             Have a project in mind or want to discuss an opportunity?
             I'd love to hear from you.
           </p>
+          <a href="mailto:${config.email}" class="contact-mail">${config.email}</a>
         </div>
 
         <div class="contact-grid">
           ${cards}
-        </div>
-
-        <div class="contact-social reveal">
-          ${socialLinks}
         </div>
       </div>
     </section>
