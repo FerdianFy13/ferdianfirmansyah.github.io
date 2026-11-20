@@ -2,90 +2,50 @@ import { experiences } from '../data/experience.js';
 import { education } from '../data/education.js';
 import { awards, certificates, organizations } from '../data/achievements.js';
 import { renderHTML, renderList } from '../utils/render.js';
-import { getIcon } from '../utils/icons.js';
 
 function renderExperienceItems() {
   return renderList(experiences, (exp) => {
     const bullets = renderList(exp.description, (desc) => `<li>${desc}</li>`);
-    const currentBadge = exp.current ? '<span class="badge badge--current">Current</span>' : '';
+    const now = exp.current ? '<span class="tl-item__now">Current</span>' : '';
 
     return `
-      <div class="timeline-item reveal">
-        <div class="timeline-card">
-          <div class="timeline-card__header">
-            <h3 class="timeline-card__role">${exp.role}</h3>
-            <div class="timeline-card__badges">
-              ${currentBadge}
-              <span class="badge badge--type">${exp.type}</span>
-            </div>
-          </div>
-          <div class="timeline-card__subheader">
-            <p class="timeline-card__company">${exp.company}</p>
-            <span class="timeline-card__period">${exp.period}</span>
-          </div>
-          <ul class="timeline-card__desc">${bullets}</ul>
+      <article class="tl-item ${exp.current ? 'tl-item--current' : ''} reveal">
+        <div class="tl-item__meta">
+          <span class="tl-item__period">${exp.period}</span>
+          ${now}
         </div>
-      </div>
+        <div class="tl-item__body">
+          <h3 class="tl-item__role">${exp.role}</h3>
+          <p class="tl-item__org">${exp.company} · ${exp.type}</p>
+          <ul class="tl-item__desc">${bullets}</ul>
+        </div>
+      </article>
     `;
   });
 }
 
-function renderEducationItems() {
-  return renderList(education, (edu) => `
-    <div class="timeline-item reveal">
-      <div class="timeline-card">
-        <div class="timeline-card__header">
-          <h3 class="timeline-card__role">${edu.degree}</h3>
-        </div>
-        <div class="timeline-card__subheader">
-          <p class="timeline-card__company">${edu.school}</p>
-          <span class="timeline-card__period">${edu.period}</span>
-        </div>
-        <p class="timeline-card__location">${edu.location}</p>
-      </div>
+function ledgerBlock(title, items) {
+  return `
+    <div class="ledger__col reveal">
+      <h3 class="ledger__title">${title}</h3>
+      <ul>
+        ${renderList(items, (item) => `
+          <li class="ledger__item">
+            <p class="ledger__name">${item.name}</p>
+            ${item.sub ? `<p class="ledger__sub">${item.sub}</p>` : ''}
+            <span class="ledger__date">${item.date}</span>
+          </li>
+        `)}
+      </ul>
     </div>
-  `);
-}
-
-function renderAchievements() {
-  const awardItems = renderList(awards, (item) => `
-    <div class="achievement-card reveal">
-      <span class="achievement-card__icon">${getIcon('award')}</span>
-      <div>
-        <h4 class="achievement-card__title">${item.title}</h4>
-        <p class="achievement-card__sub">${item.subtitle}</p>
-        <span class="achievement-card__date">${item.date}</span>
-      </div>
-    </div>
-  `);
-
-  const certItems = renderList(certificates, (item) => `
-    <div class="achievement-card reveal">
-      <span class="achievement-card__icon">${getIcon('certificate')}</span>
-      <div>
-        <h4 class="achievement-card__title">${item.title}</h4>
-        <p class="achievement-card__sub">${item.issuer}</p>
-        <span class="achievement-card__date">${item.date}</span>
-      </div>
-    </div>
-  `);
-
-  const orgItems = renderList(organizations, (item) => `
-    <div class="achievement-card reveal">
-      <span class="achievement-card__icon">${getIcon('briefcase')}</span>
-      <div>
-        <h4 class="achievement-card__title">${item.role}</h4>
-        <p class="achievement-card__sub">${item.name}</p>
-        <span class="achievement-card__date">${item.period}</span>
-      </div>
-    </div>
-  `);
-
-  return { awardItems, certItems, orgItems };
+  `;
 }
 
 export function renderExperience() {
-  const { awardItems, certItems, orgItems } = renderAchievements();
+  const eduItems = education.map((e) => ({ name: e.degree, sub: `${e.school} · ${e.location}`, date: e.period }));
+  const awardItems = awards.map((a) => ({ name: a.title, sub: a.subtitle, date: a.date }));
+  const certItems = certificates.map((c) => ({ name: c.title, sub: c.issuer, date: c.date }));
+  const orgItems = organizations.map((o) => ({ name: o.role, sub: o.name, date: o.period }));
 
   renderHTML('#experience-section', `
     <section class="section section--alt" id="experience">
@@ -95,37 +55,15 @@ export function renderExperience() {
           <h2 class="section-title">Experience & Background</h2>
         </div>
 
-        <div class="experience-grid">
+        <div class="timeline">
+          ${renderExperienceItems()}
+        </div>
 
-          <div class="experience-col">
-            <h3 class="experience-col__heading">${getIcon('briefcase')} Work Experience</h3>
-            <div class="timeline">
-              ${renderExperienceItems()}
-            </div>
-          </div>
-
-          <div class="experience-col">
-            <h3 class="experience-col__heading">${getIcon('certificate')} Education</h3>
-            <div class="timeline">
-              ${renderEducationItems()}
-            </div>
-
-            <h3 class="experience-col__heading mt-section">${getIcon('award')} Awards</h3>
-            <div class="achievements-list">
-              ${awardItems}
-            </div>
-
-            <h3 class="experience-col__heading mt-section">${getIcon('certificate')} Certificates</h3>
-            <div class="achievements-list">
-              ${certItems}
-            </div>
-
-            <h3 class="experience-col__heading mt-section">${getIcon('briefcase')} Organizations</h3>
-            <div class="achievements-list">
-              ${orgItems}
-            </div>
-          </div>
-
+        <div class="ledger">
+          ${ledgerBlock('Education', eduItems)}
+          ${ledgerBlock('Awards', awardItems)}
+          ${ledgerBlock('Certificates', certItems)}
+          ${ledgerBlock('Organizations', orgItems)}
         </div>
       </div>
     </section>

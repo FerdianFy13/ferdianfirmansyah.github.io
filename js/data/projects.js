@@ -1,6 +1,17 @@
 // All projects private — no GitHub/demo links displayed
 export const projects = [
   {
+    id: 'qiblara',
+    name: 'Qiblara — Qibla Compass',
+    type: 'Web App',
+    role: 'Web Developer',
+    private: false,
+    description: 'A privacy-first Qibla finder in Indonesian. Uses device location and compass sensor with manual coordinate fallback, calculates the great-circle bearing and distance to the Kaaba, and keeps the last known location on-device for offline use. Includes a compass calibration guide.',
+    tech: ['Geolocation API', 'Device Orientation API', 'OpenStreetMap Nominatim', 'Netlify'],
+    github: null,
+    demo: 'https://qiblara.netlify.app/',
+  },
+  {
     id: 'project-backend-api',
     name: 'Backend API System',
     type: 'Backend System',

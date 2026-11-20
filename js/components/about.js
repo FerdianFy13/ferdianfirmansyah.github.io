@@ -29,7 +29,7 @@ export function renderAbout() {
 
           <div class="about-photo reveal">
             <div class="about-photo__frame">
-              <img src="images/ferdian.webp" alt="Ferdian Firmansyah" loading="lazy" decoding="async">
+              <img src="images/ferdian.webp" alt="Ferdian Firmansyah" width="560" height="560" loading="lazy" decoding="async">
               <div class="about-photo__status" aria-label="Current status">
                 <span class="about-photo__status-dot"></span>
                 ${config.status.currentRole}
