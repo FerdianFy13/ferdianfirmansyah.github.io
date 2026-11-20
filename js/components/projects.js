@@ -41,7 +41,10 @@ function renderProjectRow(project, i) {
         <p class="project-row__tech">${project.tech.join(' · ')}</p>
       </div>
       <div class="project-row__side">
-        <span class="project-row__role">${project.role}</span>
+        <div class="project-row__meta">
+          <span class="project-row__role">${project.role}</span>
+          ${project.team ? '<span class="project-row__team">Team project</span>' : ''}
+        </div>
         <div class="project-row__links">${linksHTML}</div>
       </div>
     </article>
