@@ -40,6 +40,7 @@ Personal portfolio website built with vanilla JavaScript (ES Modules), zero depe
 ├── images/
 │   ├── favicon-journal.svg # FF monogram favicon (current)
 │   ├── favicon.svg         # Previous FF favicon (indigo, kept)
+│   ├── award/              # Certificate photos (WebP, lazy-loaded in preview modal)
 │   ├── ferdian.webp        # Profile photo shown in About (19 KB)
 │   ├── ferdian-professional.webp  # Alternative professional photo (not used)
 │   └── skills/             # Skill icon images

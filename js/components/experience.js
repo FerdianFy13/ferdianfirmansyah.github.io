@@ -1,7 +1,8 @@
 import { experiences } from '../data/experience.js';
 import { education } from '../data/education.js';
 import { awards, certificates, organizations } from '../data/achievements.js';
-import { renderHTML, renderList } from '../utils/render.js';
+import { renderHTML, renderList, escapeHTML } from '../utils/render.js';
+import { getIcon } from '../utils/icons.js';
 
 function renderExperienceItems() {
   return renderList(experiences, (exp) => {
@@ -34,6 +35,10 @@ function ledgerBlock(title, items) {
             <p class="ledger__name">${item.name}</p>
             ${item.sub ? `<p class="ledger__sub">${item.sub}</p>` : ''}
             <span class="ledger__date">${item.date}</span>
+            ${item.image ? `
+              <button type="button" class="ledger__view" data-image-open="${item.image}" data-image-title="${escapeHTML(item.name)}">
+                ${getIcon('eye')} View certificate
+              </button>` : ''}
           </li>
         `)}
       </ul>
@@ -43,7 +48,7 @@ function ledgerBlock(title, items) {
 
 export function renderExperience() {
   const eduItems = education.map((e) => ({ name: e.degree, sub: `${e.school} · ${e.location}`, date: e.period }));
-  const awardItems = awards.map((a) => ({ name: a.title, sub: a.subtitle, date: a.date }));
+  const awardItems = awards.map((a) => ({ name: a.title, sub: a.subtitle, date: a.date, image: a.image }));
   const certItems = certificates.map((c) => ({ name: c.title, sub: c.issuer, date: c.date }));
   const orgItems = organizations.map((o) => ({ name: o.role, sub: o.name, date: o.period }));
 

@@ -16,24 +16,28 @@ export const certificates = [
 export const awards = [
   {
     title: 'Best Adaptation Winner — KMIPN VI',
+    image: 'images/award/kmipn_vi.webp',
     subtitle: 'E-Government · Jakarta State Polytechnic',
     date: 'July 2024',
     location: 'Jakarta, Indonesia',
   },
   {
     title: 'Second Winner — KMIPN V',
+    image: 'images/award/kmipn_v.webp',
     subtitle: 'E-Government · Surabaya Electronic State Polytechnic',
     date: 'August 2023',
     location: 'Surabaya, Indonesia',
   },
   {
     title: 'Pass Funding — PWMV (Program Wirausaha Mahasiswa Vokasi)',
+    image: 'images/award/pwmv.webp',
     subtitle: 'Entrepreneurship · Dikti Vokasi',
     date: 'October 2021',
     location: 'Banyuwangi, Indonesia',
   },
   {
     title: 'Third Winner — KDMI (Kompetisi Debat Mahasiswa Indonesia)',
+    image: 'images/award/kdmi.webp',
     subtitle: 'Debate · Banyuwangi State Polytechnic',
     date: 'May 2021',
     location: 'Banyuwangi, Indonesia',

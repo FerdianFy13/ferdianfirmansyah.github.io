@@ -7,6 +7,7 @@ import { renderProjects } from "./components/projects.js";
 import { renderContact } from "./components/contact.js";
 import { renderFooter } from "./components/footer.js";
 import { initCvModal } from "./components/cv-modal.js";
+import { initImageModal } from "./components/image-modal.js";
 import { initProtection } from "./utils/protect.js";
 
 import {
@@ -39,6 +40,7 @@ function init() {
   initSmoothScroll();
   initMobileMenu();
   initCvModal();
+  initImageModal();
 }
 
 document.addEventListener("DOMContentLoaded", init);
